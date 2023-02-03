@@ -17,25 +17,34 @@ class repo_db:
         cursor.execute(query)
         return True
 
-    def addDrink(self, val1, val2):
+    def addDrink(val1, val2):
         query = f"INSERT INTO prices(drink, price) VALUES ('{val1}','{val2}')"
         conn.commit()
         return repo_db.dataQuery(query)
 
-    def updateDrinkName(self, name, drinkId):
-        query = f"UPDATE movies SET drink = '{name}' WHERE drink_id = '{drinkId}';"
+    def updateDrinkName(name, drinkId):
+        query = f"UPDATE prices SET drink = '{name}' WHERE drink_id = '{drinkId}';"
         return repo_db.dataQuery(query)
 
-    def updateDrinkPrice(self, price, drinkId):
-        query = f"UPDATE movies SET price = '{price}' WHERE drink_id = '{drinkId}';"
+    def updateDrinkPrice(price, drinkId):
+        query = f"UPDATE prices SET price = '{price}' WHERE drink_id = '{drinkId}';"
         return repo_db.dataQuery(query)
 
     def readAllDrinks():
         query = "SELECT * FROM prices"
         return repo_db.selectQuery(query)
 
-    def getPrice(self, drinkId):
+    def readAllOrders():
+        query = "SELECT * FROM orders"
+        return repo_db.selectQuery(query)
+
+    def getPrice(drinkId):
         query = f"SELECT price FROM prices where drink_id = '{drinkId}' "
         return repo_db.selectQuery(query)
 
-print(repo_db.readAllDrinks())
+    def addOrder(cmrName, cmrDrink, cmrSize, cmrExtras, cmrCost):
+        query = f"INSERT INTO orders(customer_name, drink, size, extras, price) VALUES ('{cmrName}', '{cmrDrink}','{cmrSize}','{cmrExtras}', '{cmrCost}'')"
+        return repo_db.dataQuery(query)
+
+
+print(repo_db.readAllOrders())
